@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "com.gigiclick.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": [
+		"KeyMappingAccessor",
+		"MinecraftMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

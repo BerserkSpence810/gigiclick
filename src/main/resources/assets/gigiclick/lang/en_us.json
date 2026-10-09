@@ -1,0 +1,40 @@
+{
+	"key.category.gigiclick.main": "GigiClick",
+	"key.gigiclick.toggle": "Toggle auto clicker",
+	"key.gigiclick.menu": "Open GigiClick menu",
+
+	"gigiclick.name": "GigiClick",
+	"gigiclick.unit.cps": "CPS",
+
+	"gigiclick.screen.title": "GigiClick Settings",
+	"gigiclick.screen.subtitle": "Hold left click to auto click",
+	"gigiclick.screen.disclaimer": "Don't use on servers",
+
+	"gigiclick.status.on": "ON",
+	"gigiclick.status.off": "OFF",
+
+	"gigiclick.speed.title": "Click speed",
+	"gigiclick.speed.hint": "New random rate every click",
+
+	"gigiclick.preset.relaxed": "Relaxed",
+	"gigiclick.preset.steady": "Steady",
+	"gigiclick.preset.fast": "Fast",
+	"gigiclick.preset.turbo": "Turbo",
+	"gigiclick.preset.tooltip": "%s–%s CPS",
+
+	"gigiclick.preview.title": "Live preview",
+	"gigiclick.preview.average": "avg %s CPS",
+	"gigiclick.preview.paused": "Paused",
+
+	"gigiclick.option.hud": "HUD indicator",
+	"gigiclick.option.key": "Toggle key",
+	"gigiclick.option.key.tooltip": "Click to change in Controls",
+
+	"gigiclick.button.reset": "Reset",
+	"gigiclick.button.done": "Done",
+
+	"gigiclick.hud.cps": "%s CPS",
+	"gigiclick.hud.range": "%s–%s CPS",
+
+	"gigiclick.message.range": " | %s–%s CPS"
+}

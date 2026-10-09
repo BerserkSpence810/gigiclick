@@ -1,0 +1,104 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'me.modmuss50.mod-publish-plugin' version "${mod_publish_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	maven {
+		name = 'TerraformersMC'
+		url = 'https://maven.terraformersmc.com/releases/'
+	}
+}
+
+fabricApi {
+	configureTests {
+		createSourceSet = true
+		modId = "${project.archives_base_name}-test"
+		enableGameTests = false
+		enableClientGameTests = true
+		eula = true
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	compileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+	localRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+}
+
+java {
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+	def projectName = project.name
+	inputs.property "projectName", projectName
+
+	from("LICENSE") {
+		rename { "${it}_$projectName" }
+	}
+}
+
+def latestChangelog = providers.fileContents(layout.projectDirectory.file("CHANGELOG.md")).asText.map { text ->
+	def sections = text.split(/(?m)^## /)
+	sections.length > 1 ? sections[1].readLines().drop(1).join("\n").trim() : ""
+}
+
+publishMods {
+	file = jar.archiveFile
+	additionalFiles.from(sourcesJar.archiveFile)
+	displayName = "GigiClick ${project.mod_version}"
+	version = "${project.mod_version}+${project.minecraft_version}"
+	changelog = latestChangelog
+	type = STABLE
+	modLoaders.add("fabric")
+
+	dryRun = providers.environmentVariable("MODRINTH_TOKEN").getOrNull() == null ||
+			providers.environmentVariable("CURSEFORGE_TOKEN").getOrNull() == null
+
+	modrinth {
+		projectId = project.modrinth_id
+		accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+		minecraftVersions.add(project.minecraft_version)
+		requires("fabric-api")
+		optional("modmenu")
+	}
+
+	curseforge {
+		projectId = project.curseforge_id
+		projectSlug = project.curseforge_slug
+		accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+		minecraftVersions.add(project.minecraft_version)
+		javaVersions.add(JavaVersion.VERSION_25)
+		clientRequired = true
+		serverRequired = false
+		requires("fabric-api")
+		optional("modmenu")
+	}
+}

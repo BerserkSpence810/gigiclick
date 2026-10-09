@@ -1,0 +1,18 @@
+{
+	"schemaVersion": 1,
+	"id": "gigiclick-test",
+	"version": "1.0.0",
+	"name": "GigiClick Tests",
+	"environment": "client",
+	"entrypoints": {
+		"fabric-client-gametest": [
+			"com.gigiclick.test.GigiClickClientTest"
+		]
+	},
+	"mixins": [
+		"gigiclick-test.mixins.json"
+	],
+	"depends": {
+		"gigiclick": "*"
+	}
+}
